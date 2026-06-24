@@ -12,6 +12,21 @@
       "item": [
         {
           "name": "Create User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonResp = pm.response.json();\r",
+                  "let userId = jsonResp._id;\r",
+                  "pm.collectionVariables.set(\"user_id_created\", userId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [],
@@ -154,6 +169,24 @@
         },
         {
           "name": "Get User by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonResp = pm.response.json();\r",
+                  "let userEmail = jsonResp['email']\r",
+                  "let userPsassword = jsonResp['password']\r",
+                  "\r",
+                  "pm.collectionVariables.set(\"user_email\", userEmail);\r",
+                  "pm.collectionVariables.set(\"user_password\", userPsassword);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -170,13 +203,13 @@
               }
             },
             "url": {
-              "raw": "{{BASE_URL}}/usuarios/T5HA6BabjV5YViPc",
+              "raw": "{{BASE_URL}}/usuarios/{{user_id_created}}",
               "host": [
                 "{{BASE_URL}}"
               ],
               "path": [
                 "usuarios",
-                "T5HA6BabjV5YViPc"
+                "{{user_id_created}}"
               ]
             }
           },
@@ -209,7 +242,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"email\": \"milena@qa.com.br\",\r\n  \"password\": \"test123\"\r\n}",
+              "raw": "{\r\n    \"email\": \"milena@qa.com.br\",\r\n    \"password\": \"test123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -235,6 +268,23 @@
       "item": [
         {
           "name": "Create Product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let jsonResp = pm.response.json();\r",
+                  "let productId = jsonResp._id;\r",
+                  "console.log(productId)\r",
+                  "pm.collectionVariables.set(\"product_id\", productId);\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "auth": {
               "type": "bearer",
@@ -408,7 +458,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"produtos\": [\r\n    {\r\n      \"idProduto\": \"{{product_id}}\",\r\n      \"quantidade\": 1\r\n    }\r\n  ]\r\n}",
+              "raw": "{\r\n    \"produtos\": [\r\n        {\r\n            \"idProduto\": \"qAoIrM5qLXBeSQOF\",\r\n            \"quantidade\": 1\r\n        }\r\n    ]\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -504,9 +554,53 @@
       ]
     }
   ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
   "variable": [
     {
       "key": "user_token",
+      "value": ""
+    },
+    {
+      "key": "user_id_created",
+      "value": ""
+    },
+    {
+      "key": "user_email",
+      "value": ""
+    },
+    {
+      "key": "user_password",
+      "value": ""
+    },
+    {
+      "key": "product_id",
+      "value": ""
+    },
+    {
+      "key": "cart_id",
       "value": ""
     }
   ]
